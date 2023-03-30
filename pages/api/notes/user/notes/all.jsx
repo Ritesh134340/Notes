@@ -1,8 +1,8 @@
 import React from 'react'
 
-const AllNotes = () => {
+const AllNotes = ({notes}) => {
   return (
-    <div>AllNotes</div>
+    <div>{notes.title}</div>
   )
 }
 

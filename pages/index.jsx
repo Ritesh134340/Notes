@@ -1,28 +1,19 @@
-import { getTodos } from "@/redux/appRedux/action";
+import getNotes from "@/helper/calls";
 import Head from "next/head";
-import Image from "next/image";
-import { useEffect } from "react";
 import {BsSearch} from "react-icons/bs"
-import {useDispatch,useSelector} from "react-redux"
+import AllNotes from "./api/notes/user/notes/all";
 
 
 export async function getServerSideProps({ req, res, params, query }) {
-  // code
-
+   const notes=await getNotes()
   return {
-    props: {},
+    props: {notes},
   }
 }
 
 
-export default function Home() {
-  const dispatch=useDispatch()
-  const todos=useSelector((state)=>state.appReducer.todos)
+export default function Home({notes}) {
 
-  useEffect(() => {
-    dispatch(getTodos())
-  },[])
-  
   return (
     <>
       <Head>
@@ -60,17 +51,11 @@ export default function Home() {
            
           </div>
         </div>
-        {/*End of Filter and Sort Wrapper Box*/}
-
-       <div>
-        <ul className="text-center">
-        {  todos && todos.map((ele,index)=>{
-            return <li key={index}>
-              {ele.todo}
-            </li>
-          })}
-        </ul>
-       </div>
+          {
+            notes && notes.map((ele)=>
+              <AllNotes key={ele._id} notes={ele} />
+            )
+          }
       </main>
     </>
   );

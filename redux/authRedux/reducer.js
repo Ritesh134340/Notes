@@ -23,7 +23,7 @@ const initialState={
 
 
          case types.SIGNUP_REQUEST : return {...state,loading:true,error:false}
-         case types.SIGNUP_SUCCESS : return {...state,}
+         case types.SIGNUP_SUCCESS : return {...state}
          case types.SIGNUP_FAILURE : return {...state,loading:false,error:true}
 
 
