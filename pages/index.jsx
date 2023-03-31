@@ -1,11 +1,15 @@
 import getNotes from "@/helper/calls";
 import Head from "next/head";
 import {BsSearch} from "react-icons/bs"
-import AllNotes from "./api/notes/user/notes/all";
+import { cookies } from 'next/headers';
+
+// import Draggable from 'react-draggable';
+import AllNotes from "./all";
 
 
 export async function getServerSideProps({ req, res, params, query }) {
    const notes=await getNotes()
+
   return {
     props: {notes},
   }
@@ -14,6 +18,7 @@ export async function getServerSideProps({ req, res, params, query }) {
 
 export default function Home({notes}) {
 
+   
   return (
     <>
       <Head>
@@ -23,6 +28,23 @@ export default function Home({notes}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+
+      {/* <Draggable
+        axis="x"
+        handle=".handle"
+        defaultPosition={{x: 0, y: 0}}
+        position={null}
+        grid={[25, 25]}
+        scale={1}
+        onStart={this.handleStart}
+        onDrag={this.handleDrag}
+        onStop={this.handleStop}>
+        <div>
+          <div className="handle">Drag from here</div>
+          <div>This readme is really dragging on...</div>
+        </div>
+      </Draggable> */}
+
         {/*Start of  Filter and Sort Wrapper Box*/}
 
         <div className="flex items-center box-border pl-[20px] w-[90%] m-auto mt-[30px] justify-between ">

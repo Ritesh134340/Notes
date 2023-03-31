@@ -1,16 +1,24 @@
 import Image from "next/image";
 import React,{useState} from "react";
 import Link from "next/link";
-import {useSelector,useDispatch} from "react-redux"
+import {useDispatch} from "react-redux"
 import {AiFillGoogleCircle} from "react-icons/ai"
 import { userSignup } from "@/redux/authRedux/action";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
+
+
+
 
 const Signup = () => {
-
+  const router=useRouter()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const dispatch=useDispatch()
+
+  
 
   const handleSignup=(e)=>{
     e.preventDefault();
@@ -22,7 +30,48 @@ const Signup = () => {
        password:password
       }
       dispatch(userSignup(payload)).then((res)=>{
-        console.log(res.payload)
+        if(res.status===200){
+          setName("")
+          setPassword("")
+          setEmail("")
+
+          toast.success(res.payload.mesg, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
+
+           router.push("/")
+        }
+        if(res.status===409){
+          toast.warn(res.mesg, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
+        }
+        else{
+          toast.error(res.mesg, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
+        }
       })
     }
 
@@ -102,6 +151,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

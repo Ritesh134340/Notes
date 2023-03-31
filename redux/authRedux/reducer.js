@@ -18,12 +18,14 @@ const initialState={
          case types.LOGIN_REQUEST : return {...state,loading:true,error:false}
          case types.LOGIN_SUCCESS :
          saveToLocalStorage("profile",payload.profile)
-         return  {...state}
+         return  {...state,token:token}
          case types.LOGIN_FAILURE : return {...state,loading:false,error:true}
 
 
          case types.SIGNUP_REQUEST : return {...state,loading:true,error:false}
-         case types.SIGNUP_SUCCESS : return {...state}
+         case types.SIGNUP_SUCCESS : 
+         saveToLocalStorage("profile",payload.profile)
+         return {...state,token:token}
          case types.SIGNUP_FAILURE : return {...state,loading:false,error:true}
 
 

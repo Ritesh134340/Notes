@@ -4,6 +4,7 @@ import Note from "@/helper/models/notes.model"
 
 
 export default async function  handler(req, res){
+
   try{
     const notes=await Note.find({})
     res.status(200).json({notes:notes })
