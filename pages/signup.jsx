@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React,{useState} from "react";
+import React,{useState,useRef} from "react";
 import Link from "next/link";
 import {useDispatch} from "react-redux"
 import {AiFillGoogleCircle} from "react-icons/ai"
@@ -17,8 +17,14 @@ const Signup = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const dispatch=useDispatch()
-
+  const nameRef=useRef(null)
+  const emailRef=useRef(null)
+  const passwordRef=useRef(null)
   
+  
+  const handleBlur=(e)=>{
+   console.log(e.target)
+  }
 
   const handleSignup=(e)=>{
     e.preventDefault();
@@ -110,29 +116,32 @@ const Signup = () => {
               </label>
               <br />
               <input
+                ref={nameRef}
                 type="text"
                 className="focus:border-[2px] focus:border-blue-600 border-[1px] outline-none pl-[10px] border-slate-300 rounded-[5px] mt-[8px] mb-[15px] w-[100%] h-[40px]"
-              value={name} onChange={(e)=>setName(e.target.value)}/>
+              value={name} onChange={(e)=>setName(e.target.value)} onBlur={handleBlur}/>
               <br />
               <label htmlFor="name" className="text-sm text-slate-500">
                 Email
               </label>
               <br />
               <input
+               ref={emailRef}
                value={email} onChange={(e)=>setEmail(e.target.value)}
                 type="text"
                 className="focus:border-[2px] focus:border-blue-600 border-[1px] outline-none pl-[10px] border-slate-300 rounded-[5px] mt-[8px] mb-[15px] w-[100%] h-[40px]"
-              />
+                onBlur={handleBlur}/>
               <br />
               <label htmlFor="name" className="text-sm text-slate-500">
                 Password
               </label>
               <br />
               <input
+               ref={passwordRef}
                value={password} onChange={(e)=>setPassword(e.target.value)}
                 type="text"
                 className="focus:border-[2px] focus:border-blue-600 border-[1px] outline-none pl-[10px] border-slate-300 rounded-[5px] mt-[8px] mb-[15px] w-[100%] h-[40px]"
-              />
+                onBlur={handleBlur}/>
               <br />
               <button className=" mt-[20px] bg-[rgb(59,113,202)] text-white pt-[8px] pb-[8px] pl-[15px] font-bold pr-[15px] rounded-[3px] text-sm" onClick={handleSignup}>
                 REGISTER
