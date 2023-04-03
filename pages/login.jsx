@@ -1,9 +1,38 @@
 import Image from "next/image";
-import React from "react";
+import React,{useEffect,useRef,useState} from "react";
 import Link from "next/link";
 import {AiFillGoogleCircle} from "react-icons/ai"
+import checkPassword from "@/utils/passwordCheck";
 
 const Login = () => {
+  const passwordRef=useRef(null);
+  const emailRef=useRef(null)
+  const [inputError,setInputError]=useState(false)
+  const [email, setemail] = useState("")
+  const [password, setPassword] = useState("")
+
+  useEffect(() => {
+    const passData=checkPassword(password)
+    console.log(passData)
+  }, [password])
+  
+  const handleBlur=(e)=>{
+   console.log(emailRef.current)
+  }
+
+  const handleLogin=(e)=>{
+    e.preventDefault()
+    let pattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(pattern.test(email)){
+      alert("correct")
+    }
+    else{
+      alert("invalid email")
+    }
+
+   
+  }
+
   return (
     <div className=" pt-[25px] pb-[50px] mb-[50px] border-[1px] rounded-[13px] shadow-md m-auto w-[60%] mt-[50px] ">
       {/* <div className="text-center mb-[27px]">
@@ -33,14 +62,15 @@ const Login = () => {
 
             <form>
               <label htmlFor="name" className="text-sm text-slate-500">
-                Name
+                Email
               </label>
               <br />
               <input
                 type="text"
-                className="focus:border-blue-600 focus:border-[2px] border-[1px] outline-none pl-[10px] border-slate-300 rounded-[5px] mt-[8px] mb-[15px] w-[100%] h-[40px]"
+                className="focus:border-blue-600 focus:border-[2px] border-[1px] outline-none pl-[10px] border-slate-300 rounded-[5px]  w-[100%] h-[40px]" onChange={(e)=>setemail(e.target.value)} onBlur={handleBlur}
               />
               <br />
+              {inputError && <p className='text-[12px] mb-[18px] text-red-500 '>Email can not be empty</p>}
               
              
               <label htmlFor="name" className="text-sm text-slate-500">
@@ -49,10 +79,11 @@ const Login = () => {
               <br />
               <input
                 type="text"
-                className="focus:border-blue-600 focus:border-[2px] border-[1px] outline-none pl-[10px] border-slate-300 rounded-[5px] mt-[8px] mb-[15px] w-[100%] h-[40px]"
+                className="focus:border-blue-600 focus:border-[2px] border-[1px] outline-none pl-[10px] border-slate-300 rounded-[5px]  w-[100%] h-[40px]"  onChange={(e)=>setPassword(e.target.value)} onBlur={handleBlur}
               />
               <br />
-              <button className=" mt-[20px] bg-[rgb(59,113,202)] text-white pt-[8px] pb-[8px] pl-[15px] font-bold pr-[15px] rounded-[3px] text-sm">
+             { inputError && <p className='text-[12px] mb-[18px] text-red-500 '>Password is required</p>}
+              <button className=" mt-[20px] bg-[rgb(59,113,202)] text-white pt-[8px] pb-[8px] pl-[15px] font-bold pr-[15px] rounded-[3px] text-sm" onClick={handleLogin}>
                 LOGIN
               </button>
             </form>
